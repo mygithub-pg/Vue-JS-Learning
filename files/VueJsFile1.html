@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>With Vue JS</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/vue"></script>
+
+<style>
+    .active{
+        color: blue;
+    }
+    .buttonColor{
+        color: red;
+    }
+</style>
+
+</head>
+<body>
+
+<div id="app" style="margin:20px;">
+    <input type="text" v-model="search" placeholder="Type serach term..."/>
+    <ul id="example">
+        <!--<li v-for ="(value, key, index) in items" v-if="value.done">-->
+        <li v-for ="item in filteredItems" v-bind:class="{active:item.done}" >    
+           {{item.name}} | {{item.done}}
+           <!--<div v-show=value.done> {{value.name}} : {{value.done}}</div> -->            
+        </li>        
+    </ul>
+<form @submit.prevent="addToList">
+    <input type="text" v-model="newitem" placeholder="Add new item..."/>
+    <input type="checkbox" v-model="newStatus"/>
+    <button type="button" v-bind:disabled="newitem.length ==0" class="btn btn-info" v-bind:class="{buttonColor:newitem.length==0}">add</button>
+    <!--<input type="button" v-on:click="addToList" />-->
+</form>
+
+<input type="text" v-model="message" placeholder="Reverse string..."/> {{reversedMessage}}
+
+<div id="example">
+  <my-component></my-component>
+  <childtemplate></childtemplate>
+  <childtemplate1></childtemplate1>
+  <mytemplate></mytemplate>
+  
+  <naam v-bind:firstname="name"></naam>
+
+</div>
+
+</div>
+
+<script>
+    Vue.component('my-component',{
+        template: '<div>A custom parent component!</div>'
+    }) 
+
+    var data = { counter: 0 }
+
+    var app = new Vue({
+        el:"#app",
+        data:{ //state
+            //items: ["One", "Two", "Three"],
+            items: [
+                {name: "Item One", done:true},
+                {name: "Item Two", done:false},
+                {name: "Item Three", done:true}
+            ],
+            newitem:"",
+            newStatus:"",
+            search: "",
+            message: "",
+            childTemplate: "",
+            name: "Prashant"
+        },
+        methods:{
+            "addToList":function(){
+                    this.items.push({name:this.newitem, done:this.newStatus});
+            }                         
+        },
+        computed: {
+            filteredItems() {
+                return this.items.filter(item => {
+                    return item.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+                })
+            },
+            reversedMessage(){
+                return this.message.split('').reverse().join('');
+            }
+        },
+        components:{
+            'childtemplate': {template:`<div>
+                                            A custom child component!
+                                        </div>`},
+            'childtemplate1': {template:'<div>A custom child1 component!</div>'},
+            'mytemplate': {
+                    template: '<button class="btn btn-info" v-on:click="counter += 1">Click me! -> {{ counter }}</button>', 
+                    data:function(){ return data }
+                },
+            'naam': {
+                template:'<div>{{firstname + " " + lastName}}</div>',
+                props:['firstname'],
+                data:function(){
+                    return {lastName:"Gadekar"}
+                }}
+
+        }
+    })  
+    
+</script>
+</body>
+</html>

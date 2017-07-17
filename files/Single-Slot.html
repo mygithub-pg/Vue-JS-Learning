@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>With Vue JS</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+" />
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+   <div id="app" style="margin:30px;">
+        <h1>I'm the parent title</h1>
+        <parent>
+            <p>This is some original content</p>
+            <p>This is some more original content</p>
+        </parent>
+    </div>
+
+    <script>
+        Vue.component('parent', {
+            template: `<div>
+                        <h2>I'm the child title</h2>
+                        <slot>
+                            This will only be displayed if there is no content
+                            to be distributed.
+                        </slot>
+                        </div>`                     
+        });       
+
+        var app = new Vue({
+            el: "#app"            
+        })
+    </script>
+</body>
+</html>

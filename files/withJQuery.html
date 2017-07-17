@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>With jQuery</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+ <input type="text" name="username">   
+<div id="app">
+</div>
+
+<script>
+    var text = "message";
+    
+    $(document).ready(function(){
+        $('#app').text(text);
+    });
+</script>
+</body>
+</html>

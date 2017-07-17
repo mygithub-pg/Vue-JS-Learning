@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>With Vue JS</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css
+" />
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app" style="margin:20px;">
+        <h3>Non-Parent-Child-Communication</h3>
+        <component-a></component-a>
+        <component-b></component-b>
+    </div>
+    <script>
+        var bus = new Vue()
+
+        Vue.component('component-a', {
+            template: `<div>
+                    <input type="text" v-model="aValue">
+                    <button type="button" v-on:click="send">Send Message</button></div>`,
+            data: function () {
+                return { aValue: '' };
+            },
+            methods: {
+                send: function () {
+                    //console.log(this.aValue)
+                    bus.$emit('passedValue', this.aValue)
+                }
+            }
+        }),
+        Vue.component('component-b', {
+            template: `<div><input type="text" v-model="receivedMessage"></div>`,
+            data: function () {
+                return { receivedMessage: '' };
+            },
+            created: function () {
+                var self = this;
+                bus.$on('passedValue', function (bValue) {
+                    self.receivedMessage = bValue;
+                    console.log(bValue);
+                });
+            }
+        })
+
+        var app = new Vue({
+            el: "#app"            
+        })
+    </script>
+</body>
+</html>

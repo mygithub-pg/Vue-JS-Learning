@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>With Vue JS</title>
+<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+<div id="app">
+    {{message}}
+    <input type="text" value="" name="msg" v-bind:value="message"/>
+    <input type="text" value="" name="msg" v-model="message"/>
+    <textarea v-model="message" placeholder="add multiple lines">{{ message }}</textarea>
+</div>
+
+<script>
+    var app = new Vue({
+        el:"#app",
+        data:{ //state
+            message: "Hello Vue"
+        }
+    })    
+</script>
+</body>
+</html>
